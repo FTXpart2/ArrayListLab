@@ -122,20 +122,18 @@ public class MyArrayList<E> {
 
   
     // returns list
-    public Object[] listreturn(){
-        
-        return (E[]) list;
-    }
-     @SuppressWarnings("unchecked")
+     
      //sorts list 
+     @SuppressWarnings("unchecked")
     public void sort() {
         Arrays.sort((E[]) list, 0, size);
     }
 
     // Sort the list using a custom comparator
-   
+    @SuppressWarnings("unchecked")
     public void sort(Comparator<? super E> c) {
         Arrays.sort((E[]) list, 0, size, c);
+
     }
     
   }

@@ -10,7 +10,7 @@ import java.util.*;
 public class PlaylistEditor extends JFrame {
     private MyArrayList<Song> playlist;
     private JPanel panel;
-    private JTextField nameField, albumField, artistField;
+    private JTextField t1,t2,t3;
     private JComboBox<String> optionsBox;
 
     public PlaylistEditor() {
@@ -26,7 +26,7 @@ public class PlaylistEditor extends JFrame {
 
 
         setTitle("Playlist Editor");
-        setSize(600, 500);
+        setSize(900, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         // sets panel for selection box
@@ -34,28 +34,29 @@ public class PlaylistEditor extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // create a panel for the control buttons
+        //Control Panel to seperate from the list panel, easier interface.
         JPanel controlPanel = new JPanel();
-        JButton addButton = new JButton("Add Song");
-        JButton shuffleButton = new JButton("Shuffle");
+        JButton addSong = new JButton("Add Song");
+        JButton shuffle = new JButton("Shuffle");
 
-        nameField = new JTextField(10);
-        albumField = new JTextField(10);
-        artistField = new JTextField(10);
+        t1 = new JTextField(10);
+        t2 = new JTextField(10);
+        t3 = new JTextField(10);
 
         // add a dropdown for sorting criteria
         optionsBox = new JComboBox<>(new String[]{"Sort by Name", "Sort by Album", "Sort by Artist"});
-        JButton sortButton = new JButton("Sort");
+        JButton sort = new JButton("Sort");
 
         controlPanel.add(new JLabel("Name:"));
-        controlPanel.add(nameField);
+        controlPanel.add(t1);
         controlPanel.add(new JLabel("Album:"));
-        controlPanel.add(albumField);
+        controlPanel.add(t2);
         controlPanel.add(new JLabel("Artist:"));
-        controlPanel.add(artistField);
-        controlPanel.add(addButton);
+        controlPanel.add(t3);
+        controlPanel.add(addSong);
         controlPanel.add(optionsBox);
-        controlPanel.add(sortButton);
-        controlPanel.add(shuffleButton);
+        controlPanel.add(sort);
+        controlPanel.add(shuffle);
 
         add(controlPanel, BorderLayout.NORTH);
         // makes it scrollable if playlist extends past.
@@ -65,23 +66,23 @@ public class PlaylistEditor extends JFrame {
         updatePanel();
 
         // add buttons and their actions
-        addButton.addActionListener(new ActionListener() {
+        addSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText().trim();
-                String album = albumField.getText().trim();
-                String artist = artistField.getText().trim();
+                String name = t1.getText().trim();
+                String album = t2.getText().trim();
+                String artist = t3.getText().trim();
                 if (!name.isEmpty() && !album.isEmpty() && !artist.isEmpty()) {
                     playlist.add(new Song(name, album, artist));
-                    nameField.setText("");
-                    albumField.setText("");
-                    artistField.setText("");
+                    t1.setText("");
+                    t2.setText("");
+                    t3.setText("");
                     updatePanel();
                 }
             }
         });
         //sorts
-        sortButton.addActionListener(new ActionListener() {
+        sort.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedCriteria = (String) optionsBox.getSelectedItem();
@@ -101,7 +102,7 @@ public class PlaylistEditor extends JFrame {
             }
         });
         //shuffle
-        shuffleButton.addActionListener(new ActionListener() {
+        shuffle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playlist.shuffle();
@@ -109,6 +110,11 @@ public class PlaylistEditor extends JFrame {
             }
         });
     }
+
+
+
+
+
     //This method is used to draw the delete buttons next to each song (Found off stack overflow)
     private void updatePanel() {
         panel.removeAll();  // Remove all existing components
